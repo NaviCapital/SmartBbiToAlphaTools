@@ -1,0 +1,62 @@
+Module execution (Execução)
+
+
+add_executions(executions, user_id=None, fund_id=None, strategy_id=None, account_id=None, accounting_days=None, basket_id=None, account_by_broker_and_currency=None, skip_compliance_check=False, instruments_affected_by_compliance=None, skip_order_checking_for_hard_matched_orders=False)
+    Inserts new executions. Each execution is either automatically added to an existing execution
+    group or, if no compatible groups are found, a new execution group is created.
+
+    If an allocated execution is to be added (i.e. ia a fund ID is specified, either globally or in the execution),
+    a new execution group is necessarily created for each execution.
+
+    If allocating, a compliance test will be performed unless skip_compliance_check is true;
+    if the tests do not pass, a ComplianceError will be raised.
+    Allocation accounts can be specified in one of three ways:
+    - a single account for all executions, using the 'account_id' parameter
+    - one account for each broker-currency pair, using the 'account_by_broker_and_currency' parameter
+    - for each execution
+    If a fund is passed but the account is not specified, the default account for executions
+    (in the instruments' currencies) will be used.
+
+    'executions': [execution]
+        execution: {'': int or None, 'order_id': int or None,
+                    'instrument_id': int, 'broker_id': int, 'execution_source': EXECUTION_SOURCES (int) or None,
+                    'side': EXECUTION_SIDES (int), 'execution_date': date, 'settlement_date': date,
+                    'quantity': int, 'unit_value': decimal, 'is_exercise': bool or None # default: False,
+                    'fund_id': int or None, 'account_id': int or None, 'strategy_id': int or None,
+                    'rebate_percent': decimal or None, # defined and used only when allocating
+                    'currency_id': int or None # only necessary if different from instrument's currency
+                    'payment_acrollover_base_pricecount_id': int or None, # only when allocating
+                    'payment_exchange_rate': decimal or None,
+                    'exec_ref_id': string or None, 'accounting_days': int or None,
+                    'operation_extra_values': dict or None,  # used only when allocating
+                    'rollover_base_price': decimal or None,
+                    'rate': dexecution_group_idecimal or None,
+                    'no_cash_impact': bool or None# default False,
+                    'origin_id': int, 'origin_content_type_id': int,
+                    'skip_price_creation': boolean or None # default False
+                    'user' : int or None,
+                    'dispatch_order_id': int or None,
+                    '': Decimal or None
+                    }
+    'fund_id': int or None
+    'strategy_id': int or None
+    'account_id': int or None
+    'account_by_broker_and_currency': {broker_id(int): {account_by_currency}} or None
+        account_by_currency: {currency_id (int): account_id (int)}
+    'skip_compliance_check': bool or None  # default: False
+    'check_orders_limit_price': If true checks execution price against order limit price
+
+    returns: default success dictionary + {'execution_group_ids': [int]}
+
+
+get_brokers(ids=None, tordist_codes=None, name=None, bloomberg_codes=None, fis_codes=None, atg_codes=None, custodians=None)
+    Retrieves ids and shallow info on all brokerage firms in the database.
+    May be filtered by broker IDs and tordist codes.
+
+    broker_ids: [int] or None
+    tordist_codes: [string] or None
+    name: string or None
+
+    returns: {broker_id (int): broker}
+        broker: {'id': int, 'name': string, 'tordist_code': int, 'custodian_id': int,
+                 'country_id': int, 'legal_id': string, 'bic_code': string, 'admin_code': string, 'file_code': string}
