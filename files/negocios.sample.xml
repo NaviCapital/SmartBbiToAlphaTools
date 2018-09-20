@@ -1,0 +1,170 @@
+<obtemNegociosBOV>
+    <negocio>
+        <DtPregao>25/07/2018 00:00:00</DtPregao>
+        <Tipo>C</Tipo>
+        <Ativo>PETR4</Ativo>
+        <Qtd>92</Qtd>
+        <Preco>32,35</Preco>
+        <Financeiro>2976,2</Financeiro>
+        <Hora>10:14</Hora>
+        <ContraParte>0</ContraParte>
+        <NrNeg>450</NrNeg>
+        <Cd_cliente>270035</Cd_cliente>
+        <Origem>13</Origem>
+        <ID_OPERACAO>1</ID_OPERACAO>
+        <OPERADOR>BJS</OPERADOR>
+        <COD_SITU_APRO />
+        <COD_TIPO_CORR />
+        <DTHR_ULT_ALTE />
+        <HR_REPASSE />
+        <COD_PAR_DEST />
+        <DTHR_EXEC_NEG />
+    </negocio>
+    <negocio>
+        <DtPregao>25/07/2018 00:00:00</DtPregao>
+        <Tipo>C</Tipo>
+        <Ativo>PETR4</Ativo>
+        <Qtd>8</Qtd>
+        <Preco>32,35</Preco>
+        <Financeiro>258,8</Financeiro>
+        <Hora>10:14</Hora>
+        <ContraParte>0</ContraParte>
+        <NrNeg>120</NrNeg>
+        <Cd_cliente>275655</Cd_cliente>
+        <Origem>13</Origem>
+        <ID_OPERACAO>2</ID_OPERACAO>
+        <OPERADOR>BJS</OPERADOR>
+        <COD_SITU_APRO />
+        <COD_TIPO_CORR />
+        <DTHR_ULT_ALTE />
+        <HR_REPASSE />
+        <COD_PAR_DEST />
+        <DTHR_EXEC_NEG />
+    </negocio>
+    <negocio>
+        <DtPregao>25/07/2018 00:00:00</DtPregao>
+        <Tipo>C</Tipo>
+        <Ativo>PETR4</Ativo>
+        <Qtd>60</Qtd>
+        <Preco>32,39</Preco>
+        <Financeiro>1943,4</Financeiro>
+        <Hora>10:18</Hora>
+        <ContraParte>0</ContraParte>
+        <NrNeg>450</NrNeg>
+        <Cd_cliente>270035</Cd_cliente>
+        <Origem>13</Origem>
+        <ID_OPERACAO>3</ID_OPERACAO>
+        <OPERADOR>BJS</OPERADOR>
+        <COD_SITU_APRO />
+        <COD_TIPO_CORR />
+        <DTHR_ULT_ALTE />
+        <HR_REPASSE />
+        <COD_PAR_DEST />
+        <DTHR_EXEC_NEG />
+    </negocio>
+    <negocio>
+        <DtPregao>25/07/2018 00:00:00</DtPregao>
+        <Tipo>C</Tipo>
+        <Ativo>BRAP4</Ativo>
+        <Qtd>40</Qtd>
+        <Preco>32,39</Preco>
+        <Financeiro>1295,6</Financeiro>
+        <Hora>10:18</Hora>
+        <ContraParte>0</ContraParte>
+        <NrNeg>450</NrNeg>
+        <Cd_cliente>275655</Cd_cliente>
+        <Origem>13</Origem>
+        <ID_OPERACAO>4</ID_OPERACAO>
+        <OPERADOR>BJS</OPERADOR>
+        <COD_SITU_APRO />
+        <COD_TIPO_CORR />
+        <DTHR_ULT_ALTE />
+        <HR_REPASSE />
+        <COD_PAR_DEST />
+        <DTHR_EXEC_NEG />
+    </negocio>
+    <negocio>
+        <DtPregao>25/07/2018 00:00:00</DtPregao>
+        <Tipo>C</Tipo>
+        <Ativo>BRAP4</Ativo>
+        <Qtd>300</Qtd>
+        <Preco>32,39</Preco>
+        <Financeiro>9717</Financeiro>
+        <Hora>10:18</Hora>
+        <ContraParte>0</ContraParte>
+        <NrNeg>460</NrNeg>
+        <Cd_cliente>270035</Cd_cliente>
+        <Origem>13</Origem>
+        <ID_OPERACAO>5</ID_OPERACAO>
+        <OPERADOR>BJS</OPERADOR>
+        <COD_SITU_APRO />
+        <COD_TIPO_CORR />
+        <DTHR_ULT_ALTE />
+        <HR_REPASSE />
+        <COD_PAR_DEST />
+        <DTHR_EXEC_NEG />
+    </negocio>
+    <negocio>
+        <DtPregao>25/07/2018 00:00:00</DtPregao>
+        <Tipo>V</Tipo>
+        <Ativo>VALE3</Ativo>
+        <Qtd>100</Qtd>
+        <Preco>55,3</Preco>
+        <Financeiro>5530</Financeiro>
+        <Hora>10:18</Hora>
+        <ContraParte>0</ContraParte>
+        <NrNeg>5970</NrNeg>
+        <Cd_cliente>270035</Cd_cliente>
+        <Origem>13</Origem>
+        <ID_OPERACAO>6</ID_OPERACAO>
+        <OPERADOR>BJS</OPERADOR>
+        <COD_SITU_APRO />
+        <COD_TIPO_CORR />
+        <DTHR_ULT_ALTE />
+        <HR_REPASSE />
+        <COD_PAR_DEST />
+        <DTHR_EXEC_NEG />
+    </negocio>
+    <negocio>
+        <DtPregao>25/07/2018 00:00:00</DtPregao>
+        <Tipo>C</Tipo>
+        <Ativo>BRAP4</Ativo>
+        <Qtd>100</Qtd>
+        <Preco>32,39</Preco>
+        <Financeiro>3239</Financeiro>
+        <Hora>10:19</Hora>
+        <ContraParte>0</ContraParte>
+        <NrNeg>480</NrNeg>
+        <Cd_cliente>270035</Cd_cliente>
+        <Origem>13</Origem>
+        <ID_OPERACAO>7</ID_OPERACAO>
+        <OPERADOR>BJS</OPERADOR>
+        <COD_SITU_APRO />
+        <COD_TIPO_CORR />
+        <DTHR_ULT_ALTE />
+        <HR_REPASSE />
+        <COD_PAR_DEST />
+        <DTHR_EXEC_NEG />
+    </negocio>
+    <negocio>
+        <DtPregao>25/07/2018 00:00:00</DtPregao>
+        <Tipo>V</Tipo>
+        <Ativo>VALE3</Ativo>
+        <Qtd>100</Qtd>
+        <Preco>55,32</Preco>
+        <Financeiro>5532</Financeiro>
+        <Hora>10:19</Hora>
+        <ContraParte>0</ContraParte>
+        <NrNeg>5980</NrNeg>
+        <Cd_cliente>270035</Cd_cliente>
+        <Origem>13</Origem>
+        <ID_OPERACAO>8</ID_OPERACAO>
+        <OPERADOR>BJS</OPERADOR>
+        <COD_SITU_APRO />
+        <COD_TIPO_CORR />
+        <DTHR_ULT_ALTE />
+        <HR_REPASSE />
+        <COD_PAR_DEST />
+        <DTHR_EXEC_NEG />
+    </negocio>
+</obtemNegociosBOV>
