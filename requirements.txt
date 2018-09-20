@@ -1,0 +1,9 @@
+# Install all project dependencies with
+# pip install -r requirements.txt
+
+requests    # http requests
+os          # get env vars
+
+bs4         # xml manipulation (after parsing)
+lxml        # xml parsing (used by bs4)
+json        # json parser
