@@ -1,4 +1,10 @@
-# Ignore these files
+# Ignore noisy files
 **/__pycache__/**
 **/.DS_Store
+
+# Ignore sensitive files
 **/.env
+files/*
+
+# Permit sample files
+!files/*.sample.xml
