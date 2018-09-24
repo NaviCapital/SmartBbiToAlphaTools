@@ -2,6 +2,7 @@
 import base_client as Client
 import instruments as Instrument
 import brokers as Broker
+import market as Market
 
 # External libraries
 import datetime
@@ -18,7 +19,7 @@ def get_executions():
         instrument_id = Instrument.get_id(negocio.ativo.text)
         execution_date = datetime.date.today()
         settlement_days = Instrument.get_settlement_days(negocio.ativo.text)
-        settlement_date = execution_date + timedelta(days=settlement_days)
+        settlement_date = Market.add_business_days(execution_date, settlement_days)
         executions.append({
             "broker_id": Broker.get_broker_id(122),
 			"exec_ref_id": execution_date.strftime("%Y%m%d-") + negocio.id_operacao.text,
