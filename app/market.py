@@ -4,7 +4,6 @@ import base_client as Client
 # External libraries
 import datetime
 from datetime import timedelta
-from pprint import pprint
 
 business_days = Client.request("market", "get_business_days_in_range", { "start_date": "2018-01-01", "end_date": "2019-12-31" })["dates"]
 
