@@ -1,7 +1,6 @@
 # Ignore noisy files
 **/__pycache__/**
 **/.DS_Store
-logs.txt
 
 # Ignore sensitive files
 **/.env
