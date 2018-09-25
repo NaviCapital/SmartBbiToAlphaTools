@@ -15,7 +15,6 @@ from alpha_tools import helpers as Helper
 try:
     Client.request("execution", "add_executions", { "executions": Execution.get_executions("bov") })
     print("Successfully imported BOV executions")
-    raise Exception("aiasij")
     Client.request("execution", "add_executions", { "executions": Execution.get_executions("bmf") })
     print("Successfully imported BMF executions")
 except Exception as ex:
