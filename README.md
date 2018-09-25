@@ -6,9 +6,7 @@ Open a terminal, go to the root folder of this project, and run: `pip install -r
 
 ## Setup environment variables
 
-Create a `.env` file in the root of the project.
-
-Add the following variables to the file:
+Create a `.env` file in the root of the project with the following content:
 
 ```
 ALPHA_BASE_URL="http://prod.your_company_name.alphatools.com.br"
