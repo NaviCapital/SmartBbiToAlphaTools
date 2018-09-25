@@ -11,7 +11,7 @@ def log_error(fullpath):
     print(error)
 
 
-from smtplib import SMTP_SSL as SMTP
+from smtplib import SMTP
 from email.mime.text import MIMEText
 
 def send_email(subject, body, toaddr=os.getenv("SMTP_TO")):
@@ -19,7 +19,9 @@ def send_email(subject, body, toaddr=os.getenv("SMTP_TO")):
     msg['To'] = toaddr
     msg['Subject'] = subject
 
-    server = SMTP(os.getenv("SMTP_SERVER"))
+    server = SMTP(os.getenv("SMTP_SERVER"), 587)
+    server.ehlo()
+    server.starttls()
     server.login(os.getenv("SMTP_FROM"), os.getenv("SMTP_PASS"))
     server.sendmail(os.getenv("SMTP_FROM"), toaddr, msg.as_string())
     server.quit()
