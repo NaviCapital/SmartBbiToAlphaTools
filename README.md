@@ -15,11 +15,16 @@ ALPHA_BASE_URL="http://prod.your_company_name.alphatools.com.br"
 ALPHA_USERNAME=your_company_name
 ALPHA_PASSWORD=super_password
 ALPHA_XML_FOLDER="C://tmp/"
+
 BBI_USERNAME=your_bbi_username
 BBI_PASSWORD=your_bbi_password
+
+SMTP_TO="operations@your_company.com.br"
+SMTP_FROM="your_email@gmail.com"
+SMTP_PASS="y0ur_p4ssw0rd"
 ```
 
-## Run it!
+# Usage
 
 Inside the `app` folder, double-click the `run.py` file to import today's trades from SmartBBI into AlphaTools.
 

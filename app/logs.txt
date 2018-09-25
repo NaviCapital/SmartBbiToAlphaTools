@@ -1,7 +1,84 @@
 ################
 2018-09-25 00:00
 Traceback (most recent call last):
-  File "c:/Users/Marcelo Muniz/Documents/GitHub/AlphaToolsIntegration/app/run.py", line 18, in <module>
+  File "c:/Users/Whatever/Documents/GitHub/AlphaToolsIntegration/app/run.py", line 18, in <module>
     raise Exception("aiasij")
 Exception: aiasij
+
+################
+2018-09-25 00:00
+Traceback (most recent call last):
+  File "c:/Users/Whatever/Documents/GitHub/AlphaToolsIntegration/app/run.py", line 16, in <module>
+    raise Exception("OMG! They killed Kenny!")
+Exception: OMG! They killed Kenny!
+
+################
+2018-09-25 00:00
+Traceback (most recent call last):
+  File "c:/Users/Whatever/Documents/GitHub/AlphaToolsIntegration/app/run.py", line 16, in <module>
+    raise Exception("OMG! They killed Kenny!")
+Exception: OMG! They killed Kenny!
+
+################
+2018-09-25 00:00
+Traceback (most recent call last):
+  File "c:/Users/Whatever/Documents/GitHub/AlphaToolsIntegration/app/run.py", line 17, in <module>
+    raise Exception("OMG! They killed Kenny!")
+Exception: OMG! They killed Kenny!
+
+################
+2018-09-25 00:00
+Traceback (most recent call last):
+  File "c:/Users/Whatever/Documents/GitHub/AlphaToolsIntegration/app/run.py", line 17, in <module>
+    raise Exception("OMG! They killed Kenny!")
+Exception: OMG! They killed Kenny!
+
+################
+2018-09-25 00:00
+Traceback (most recent call last):
+  File "c:/Users/Whatever/Documents/GitHub/AlphaToolsIntegration/app/run.py", line 17, in <module>
+    raise Exception("OMG! They killed Kenny!")
+Exception: OMG! They killed Kenny!
+
+################
+2018-09-25 00:00
+Traceback (most recent call last):
+  File "c:/Users/Whatever/Documents/GitHub/AlphaToolsIntegration/app/run.py", line 17, in <module>
+    raise Exception("OMG! They killed Kenny!")
+Exception: OMG! They killed Kenny!
+
+################
+2018-09-25 00:00
+Traceback (most recent call last):
+  File "c:/Users/Whatever/Documents/GitHub/AlphaToolsIntegration/app/run.py", line 17, in <module>
+    raise Exception("OMG! They killed Kenny!")
+Exception: OMG! They killed Kenny!
+
+################
+2018-09-25 00:00
+Traceback (most recent call last):
+  File "c:/Users/Whatever/Documents/GitHub/AlphaToolsIntegration/app/run.py", line 17, in <module>
+    raise Exception("OMG! They killed Kenny!")
+Exception: OMG! They killed Kenny!
+
+################
+2018-09-25 00:00
+Traceback (most recent call last):
+  File "c:/Users/Whatever/Documents/GitHub/AlphaToolsIntegration/app/run.py", line 17, in <module>
+    raise Exception("OMG! They killed Kenny!")
+Exception: OMG! They killed Kenny!
+
+################
+2018-09-25 00:00
+Traceback (most recent call last):
+  File "c:/Users/Whatever/Documents/GitHub/AlphaToolsIntegration/app/run.py", line 17, in <module>
+    raise Exception("OMG! They killed Kenny!")
+Exception: OMG! They killed Kenny!
+
+################
+2018-09-25 00:00
+Traceback (most recent call last):
+  File "c:/Users/Whatever/Documents/GitHub/AlphaToolsIntegration/app/run.py", line 17, in <module>
+    raise Exception("OMG! They killed Kenny!")
+Exception: OMG! They killed Kenny!
 

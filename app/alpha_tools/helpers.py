@@ -1,5 +1,6 @@
 import traceback
 import datetime
+import os
 
 def log_error(fullpath):
     error = "################\n"
@@ -8,3 +9,17 @@ def log_error(fullpath):
     file = open(fullpath, "a")
     file.write(error)
     print(error)
+
+
+from smtplib import SMTP_SSL as SMTP
+from email.mime.text import MIMEText
+
+def send_email(subject, body, toaddr=os.getenv("SMTP_TO")):
+    msg = MIMEText(body, 'plain')
+    msg['To'] = toaddr
+    msg['Subject'] = subject
+
+    server = SMTP('smtp.gmail.com')
+    server.login(os.getenv("SMTP_FROM"), os.getenv("SMTP_PASS"))
+    server.sendmail(os.getenv("SMTP_FROM"), toaddr, msg.as_string())
+    server.quit()
