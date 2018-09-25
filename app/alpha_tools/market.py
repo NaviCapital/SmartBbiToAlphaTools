@@ -1,5 +1,5 @@
 # Project-specific libraries
-import base_client as Client
+from . import base_client as Client
 
 # External libraries
 import datetime

@@ -2,11 +2,6 @@
 import requests, requests.auth
 import json, os
 
-# Load environment vars
-import dotenv
-path = dotenv.find_dotenv('.env')
-dotenv.load_dotenv(dotenv_path=path)
-
 # Settings
 base_url = os.getenv("ALPHA_BASE_URL")
 api_user = os.getenv("ALPHA_USERNAME")

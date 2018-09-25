@@ -19,9 +19,9 @@ BBI_USERNAME=your_bbi_username
 BBI_PASSWORD=your_bbi_password
 ```
 
-# Run it!
+## Run it!
 
-Double-click the `run.py` file to import today's trades from SmartBBI into AlphaTools.
+Inside the `app` folder, double-click the `run.py` file to import today's trades from SmartBBI into AlphaTools.
 
 
 # Contributing

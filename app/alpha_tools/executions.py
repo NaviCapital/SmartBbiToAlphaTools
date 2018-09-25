@@ -1,8 +1,8 @@
 # Project-specific libraries
-import base_client as Client
-import instruments as Instrument
-import brokers as Broker
-import market as Market
+from . import base_client as Client
+from . import instruments as Instrument
+from . import brokers as Broker
+from . import market as Market
 
 # External libraries
 import os
