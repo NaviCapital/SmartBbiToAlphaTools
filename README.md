@@ -22,6 +22,7 @@ SMTP_FROM="your_email@gmail.com"
 SMTP_PASS="y0ur_p4ssw0rd"
 ```
 
+
 # Usage
 
 Inside the `app` folder, double-click the `run.py` file to import today's trades from SmartBBI into AlphaTools.

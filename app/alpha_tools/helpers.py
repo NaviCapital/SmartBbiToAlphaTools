@@ -19,7 +19,7 @@ def send_email(subject, body, toaddr=os.getenv("SMTP_TO")):
     msg['To'] = toaddr
     msg['Subject'] = subject
 
-    server = SMTP('smtp.gmail.com')
+    server = SMTP(os.getenv("SMTP_SERVER"))
     server.login(os.getenv("SMTP_FROM"), os.getenv("SMTP_PASS"))
     server.sendmail(os.getenv("SMTP_FROM"), toaddr, msg.as_string())
     server.quit()
