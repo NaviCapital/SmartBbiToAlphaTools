@@ -17,4 +17,7 @@ def request(module, method, params):
     url = '%s/api/2/sync/%s/%s' % (base_url, module, method)
     auth = requests.auth.HTTPBasicAuth(api_user, api_pass)
     r = requests.post(url, json=params, auth=auth)
-    return r.json()
+    if r.status_code == 200:
+        return r.json()
+    else:
+        raise Exception(requests.utils.get_unicode_from_response(r))
