@@ -11,4 +11,3 @@ Traceback (most recent call last):
   File "c:/Users/Whatever/Documents/GitHub/AlphaToolsIntegration/app/run.py", line 15, in <module>
     raise Exception("OMG! They killed Kenny!")
 Exception: OMG! They killed Kenny!
-
