@@ -6,6 +6,7 @@ app/logs.txt
 # Ignore sensitive files
 **/.env
 files/*
+importa_trades.bat
 
 # Permit sample files
 !files/*.sample.xml
