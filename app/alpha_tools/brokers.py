@@ -1,9 +1,6 @@
 # Project-specific libraries
 from . import base_client as Client
 
-# External libraries
-# ...
-
 brokers_json = Client.request("execution", "get_brokers", None)
 
 def get_broker_id(b3_id, hash = brokers_json):
