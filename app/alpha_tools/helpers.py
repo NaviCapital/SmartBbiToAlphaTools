@@ -2,14 +2,12 @@ import traceback
 import datetime
 import os
 
-def log_error(fullpath):
-    error = "################\n"
-    now = datetime.date.today().strftime("%Y-%m-%d %H:%M")
-    error += f"{now}\n" + traceback.format_exc() + "\n"
+def log(fullpath, text):
+    log = "################\n"
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    log += f"{now}\n" + text + "\n"
     file = open(fullpath, "a")
-    file.write(error)
-    print(error)
-
+    file.write(log)
 
 from smtplib import SMTP
 from email.mime.text import MIMEText

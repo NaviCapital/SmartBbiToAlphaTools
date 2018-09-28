@@ -18,6 +18,7 @@ try:
     print("Successfully imported BOV executions")
     Client.request("execution", "add_executions", { "executions": Execution.get_executions("bmf") })
     print("Successfully imported BMF executions")
+    Helper.log(current_path + "logs.txt", "Successfully imported all executions")
 except Exception as ex:
-    Helper.log_error(current_path + "logs.txt")
+    Helper.log(current_path + "logs.txt", traceback.format_exc())
     Helper.send_email(str(ex), traceback.format_exc())
