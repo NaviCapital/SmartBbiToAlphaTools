@@ -1,6 +1,8 @@
 # Load environment vars
-import dotenv, os, subprocess
-dotenv.load_dotenv(dotenv_path=dotenv.find_dotenv('.env'))
+import dotenv
+import os
+import subprocess
+dotenv.load_dotenv(dotenv_path=dotenv.find_dotenv('dev.env'))
 
 # Download XML files from Smart BBI
 current_path = os.path.dirname(os.path.abspath(__file__)) + "\\"
