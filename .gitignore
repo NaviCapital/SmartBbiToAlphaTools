@@ -4,7 +4,7 @@
 app/logs.txt
 
 # Ignore sensitive files
-**/.env
+**/*.env
 files/*
 importa_trades.bat
 
