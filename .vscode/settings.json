@@ -10,5 +10,6 @@
     "**/__pycache__": true,
     "files/negocios.xml": true,
   },
-  "editor.insertSpaces": true
+  "editor.insertSpaces": true,
+  "python.pythonPath": "~/.pyenv/versions/3.6.6/bin/python"
 }
