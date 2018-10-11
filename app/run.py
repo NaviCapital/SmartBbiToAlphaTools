@@ -14,11 +14,13 @@ from alpha_tools import base_client as Client
 from alpha_tools import helpers as Helper
 
 try:
-    Client.request("execution", "add_executions", { "executions": Execution.get_executions("bov") })
-    print("Successfully imported BOV executions")
-    Client.request("execution", "add_executions", { "executions": Execution.get_executions("bmf") })
-    print("Successfully imported BMF executions")
+    executions = Execution.get_all_executions_from_xml()
+    Execution.create_orders(executions)
+    Execution.add_executions(executions)
+    print("Successfully imported all executions")
     Helper.log(current_path + "logs.txt", "Successfully imported all executions")
+
 except Exception as ex:
     Helper.log(current_path + "logs.txt", traceback.format_exc())
     Helper.send_email(str(ex), traceback.format_exc())
+    print(traceback.format_exc())

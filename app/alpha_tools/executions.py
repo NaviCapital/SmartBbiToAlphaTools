@@ -10,14 +10,24 @@ import datetime
 from datetime import timedelta
 from bs4 import BeautifulSoup
 
-def get_executions(kind = "bov"):
+def get_all_executions_from_xml():
+    executions = []
+    executions += get_executions_from_xml("bov")
+    executions += get_executions_from_xml("bmf")
+    return executions
+
+def get_executions_from_xml(kind = "bov"):
+    '''Read trades from xml file and format it to AlphaTools.'''
     today = datetime.date.today().strftime("%Y%m%d")
     path = os.getenv("ALPHA_XML_FOLDER") + f"negocios_{kind}_{today}.xml"
     xmldoc = open(path, "r")
     xmldoc = BeautifulSoup(xmldoc, "lxml")
     xml_negocios = xmldoc.findAll("negocio")
     executions = []
+    count = len(xml_negocios)
     for xml_negocio in xml_negocios:
+        if count % 100 == 0: print("reading negocios...", count)
+        count -= 1
         hash_negocio = fetch_negocio_from_xml(xml_negocio, kind)
         execution_date = datetime.date.today()
         settlement_days = Instrument.get_settlement_days(hash_negocio["instrument"])
@@ -33,10 +43,10 @@ def get_executions(kind = "bov"):
 			"unit_value": float(hash_negocio["price"].replace(",", ".")),
 		}
         executions.append(curr_negocio)
-        #print("importando negocio", hash_negocio["external_id"], "de", len(xml_negocios))
     return executions
 
 def fetch_negocio_from_xml(xml_negocio, kind = "bov"):
+    '''Parse trade info from XML file depending on its provenance.'''
     hash_negocio = {}
     if kind == "bov":
         hash_negocio["instrument"] = xml_negocio.ativo.text
@@ -53,3 +63,90 @@ def fetch_negocio_from_xml(xml_negocio, kind = "bov"):
         hash_negocio["price"] = xml_negocio.pr_negocio.text
         hash_negocio["side"] = xml_negocio.cd_natope.text
     return hash_negocio
+
+def add_executions(executions):
+    '''Upload executions to Inoa Alpha Tools.'''
+    execution_chunks = [executions[i:i + 200] for i in range(0, len(executions), 200)]
+    count = len(execution_chunks)
+    for chunk in execution_chunks:
+        print("sending chunk", count); count -= 1
+        Client.request("execution", "add_executions", { "executions": chunk })
+
+def get_orders_based_on_xml_executions(executions):
+    '''Returns a list of orders based on executions from XML.'''
+    executions = merge_executions(executions)
+    orders = []
+    if len(executions) > 0:
+        for execution_key in executions:
+            ex = executions[execution_key]
+            orders.append({
+                "instrument_id": ex["instrument_id"],
+                "side": ex["side"],
+                "quantity": ex["quantity"],
+                "date": ex["execution_date"],
+                "base_price": 0,
+                "notes": ""
+            })
+    return orders
+
+def merge_executions(executions):
+    merged_executions = {}
+    for execution in executions:
+        merging_factors = [str(execution["instrument_id"]), str(execution["side"])]
+        merging_id = "-".join(merging_factors)
+        if merging_id in merged_executions:
+            merged_executions[merging_id]["quantity"] += execution["quantity"]
+        else:
+            merged_executions[merging_id] = execution.copy()
+    return merged_executions
+
+
+def get_orders_based_on_created_executions(date=datetime.date.today().strftime("%Y-%m-%d")):
+    '''Returns a list of orders based on executions created on AlphaTools.'''
+    group_info = Client.request("execution", "get_execution_group_info", { "start_date": date, "end_date": date })
+    orders = []
+    if group_info["items"] and len(group_info["items"]) > 0:
+        items = group_info["items"]
+        for item in items:
+            if item["quantity"] != 0:
+                orders.append({
+                    "instrument_id": item["instrument_id"],
+                    "side": item["side"],
+                    "quantity": item["quantity"],
+                    "date": date,
+                    "base_price": 0,
+                    "notes": item["execution_group_id"]
+                })
+    return orders
+
+def create_orders(executions):
+    '''Create orders based on executions and make sure they are not duplicates.'''
+    orders = get_orders_based_on_xml_executions(executions)
+    for order in orders:
+        matching_order = find_matching_order_id(instrument_id=order["instrument_id"], side=order["side"])
+        if matching_order:
+            print("update order values", matching_order)
+        else:
+            Client.request("execution", "add_orders", { "orders": [order], "user_id": 1 })
+            print("create new order", order["quantity"])
+
+def get_orders(date=datetime.date.today().strftime("%Y-%m-%d"), instrument_ids=None, side=None):
+    '''Return all the orders filtered by some specific parameters.'''
+    orders = Client.request("execution", "get_order_info", {
+        "start_date": date,
+        "end_date": date,
+        "instrument_ids": instrument_ids,
+        "side": side })
+    return orders
+
+def find_matching_order_id(date=datetime.date.today().strftime("%Y-%m-%d"), instrument_id=None, side=None):
+    '''Given a few parameters, return the id of the first matching order.'''
+    orders = Client.request("execution", "get_order_info", {
+        "start_date": date,
+        "end_date": date,
+        "instrument_ids": [instrument_id],
+        "side": side})
+    for order in orders:
+        if orders[order]["user_id"] == 1:
+            return order
+    return None
