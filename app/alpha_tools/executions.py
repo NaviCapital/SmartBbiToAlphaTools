@@ -123,12 +123,23 @@ def create_orders(executions):
     '''Create orders based on executions and make sure they are not duplicates.'''
     orders = get_orders_based_on_xml_executions(executions)
     for order in orders:
-        matching_order = find_matching_order_id(instrument_id=order["instrument_id"], side=order["side"])
+        matching_order = find_matching_order(instrument_id=order["instrument_id"], side=order["side"])
         if matching_order:
-            print("update order values", matching_order)
+            if float(matching_order["quantity"]) != order["quantity"]:
+                # should be like this, plus sth to update execution_status
+                order["order_id"] = matching_order["order_id"]
+                order["quantity"] += 1 # todo: remove
+                Client.request("execution", "add_orders", { "orders": [order], "user_id": 1 })
+                print("updated order", order["order_id"])
+
+                # but this is what I could do to workaround the issue
+                # delete_orders([matching_order["order_id"]])
+                # Client.request("execution", "add_orders", { "orders": [order], "user_id": 1 })
+                # print("Updated order", matching_order["quantity"])
         else:
+            order["quantity"] += 1 # todo: remove
             Client.request("execution", "add_orders", { "orders": [order], "user_id": 1 })
-            print("create new order", order["quantity"])
+            print("created new order", order["quantity"])
 
 def get_orders(date=datetime.date.today().strftime("%Y-%m-%d"), instrument_ids=None, side=None):
     '''Return all the orders filtered by some specific parameters.'''
@@ -139,14 +150,28 @@ def get_orders(date=datetime.date.today().strftime("%Y-%m-%d"), instrument_ids=N
         "side": side })
     return orders
 
-def find_matching_order_id(date=datetime.date.today().strftime("%Y-%m-%d"), instrument_id=None, side=None):
+def find_matching_order(date=datetime.date.today().strftime("%Y-%m-%d"), instrument_id=None, side=None):
     '''Given a few parameters, return the id of the first matching order.'''
     orders = Client.request("execution", "get_order_info", {
         "start_date": date,
         "end_date": date,
         "instrument_ids": [instrument_id],
         "side": side})
-    for order in orders:
-        if orders[order]["user_id"] == 1:
-            return order
+    for order_id in orders:
+        if orders[order_id]["user_id"] == 1:
+            return orders[order_id]
     return None
+
+def delete_today_orders(date=datetime.date.today().strftime("%Y-%m-%d")):
+    '''Delete every order based on specific date.'''
+    orders = Client.request("execution", "get_order_info", { "start_date": date, "end_date": date })
+    Client.request("execution", "delete_orders", { "order_ids": [int(order_id) for order_id in orders]})
+
+def delete_orders(order_ids):
+    '''Delete orders by id.'''
+    Client.request("execution", "delete_orders", { "order_ids": order_ids })
+
+def delete_executions(executions):
+    '''Delete specific executions.'''
+    Client.request("execution", "delete_executions_by_exec_ref_id", {
+                   "exec_ref_ids": [execution["exec_ref_id"] for execution in executions]})
