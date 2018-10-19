@@ -90,6 +90,7 @@ def get_orders_based_on_xml_executions(executions):
     return orders
 
 def merge_executions(executions):
+    '''Group/merge executions by instrument and side.'''
     merged_executions = {}
     for execution in executions:
         merging_factors = [str(execution["instrument_id"]), str(execution["side"])]
@@ -126,15 +127,9 @@ def create_orders(executions):
         matching_order = find_matching_order(instrument_id=order["instrument_id"], side=order["side"])
         if matching_order:
             if float(matching_order["quantity"]) != order["quantity"]:
-                # should be like this, plus sth to update execution_status
                 order["order_id"] = matching_order["order_id"]
                 Client.request("execution", "add_orders", { "orders": [order], "user_id": 1 })
                 print("updated order", order["order_id"])
-
-                # but this is what I could do to workaround the issue
-                # delete_orders([matching_order["order_id"]])
-                # Client.request("execution", "add_orders", { "orders": [order], "user_id": 1 })
-                # print("Updated order", matching_order["quantity"])
         else:
             Client.request("execution", "add_orders", { "orders": [order], "user_id": 1 })
             print("created new order", order["quantity"])
