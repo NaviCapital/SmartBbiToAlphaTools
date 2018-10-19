@@ -128,7 +128,6 @@ def create_orders(executions):
             if float(matching_order["quantity"]) != order["quantity"]:
                 # should be like this, plus sth to update execution_status
                 order["order_id"] = matching_order["order_id"]
-                order["quantity"] += 1 # todo: remove
                 Client.request("execution", "add_orders", { "orders": [order], "user_id": 1 })
                 print("updated order", order["order_id"])
 
@@ -137,7 +136,6 @@ def create_orders(executions):
                 # Client.request("execution", "add_orders", { "orders": [order], "user_id": 1 })
                 # print("Updated order", matching_order["quantity"])
         else:
-            order["quantity"] += 1 # todo: remove
             Client.request("execution", "add_orders", { "orders": [order], "user_id": 1 })
             print("created new order", order["quantity"])
 
