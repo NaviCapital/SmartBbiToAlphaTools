@@ -42,7 +42,8 @@ def get_executions_from_xml(kind = "bov"):
             "side": 1 if hash_negocio["side"] == "C" else 2,
 			"unit_value": float(hash_negocio["price"].replace(",", ".")),
 		}
-        executions.append(curr_negocio)
+        if hash_negocio["instrument"] not in os.getenv("BLACKLIST").split(","):
+            executions.append(curr_negocio)
     return executions
 
 def fetch_negocio_from_xml(xml_negocio, kind = "bov"):
