@@ -90,17 +90,6 @@ def get_orders_based_on_xml_executions(executions):
             })
     return orders
 
-def merge_executions(executions):
-    '''Group/merge executions by instrument and side.'''
-    merged_executions = {}
-    for execution in executions:
-        merging_factors = [str(execution["instrument_id"]), str(execution["side"])]
-        merging_id = "-".join(merging_factors)
-        if merging_id in merged_executions:
-            merged_executions[merging_id]["quantity"] += execution["quantity"]
-        else:
-            merged_executions[merging_id] = execution.copy()
-    return merged_executions
 
 
 def get_orders_based_on_created_executions(date=datetime.date.today().strftime("%Y-%m-%d")):
@@ -135,8 +124,9 @@ def create_orders(executions):
             Client.request("execution", "add_orders", { "orders": [order], "user_id": 1 })
             print("created new order", order["quantity"])
 
+
 def get_orders(date=datetime.date.today().strftime("%Y-%m-%d"), instrument_ids=None, side=None):
-    '''Return all the orders filtered by some specific parameters.'''
+    '''Return all the orders from Inoa filtered by some specific parameters.'''
     orders = Client.request("execution", "get_order_info", {
         "start_date": date,
         "end_date": date,
@@ -169,3 +159,87 @@ def delete_executions(executions):
     '''Delete specific executions.'''
     Client.request("execution", "delete_executions_by_exec_ref_id", {
                    "exec_ref_ids": [execution["exec_ref_id"] for execution in executions]})
+
+def add_order(order):
+    '''Create order.'''
+    date = datetime.date.today().strftime("%Y-%m-%d")
+    # todo: check if order comes with a date
+    new_order = {
+        "instrument_id": order["instrument_id"],
+        "side": order["side"],
+        "quantity": order["quantity"],
+        "broker_id": order["broker_ids"][0],
+        "date": date,
+        "base_price": 0, "notes": "" }
+    Client.request("execution", "add_orders", { "orders": [new_order], "user_id": 1})
+
+def add_order_from_execution(execution):
+    new_order = {
+        "instrument_id": execution["instrument_id"],
+        "side": execution["side"],
+        "quantity": execution["quantity"],
+        "broker_id": execution["broker_id"],
+        "date": execution["execution_date"],
+        "base_price": 0, "notes": "" }
+    Client.request("execution", "add_orders", { "orders": [new_order], "user_id": 1 })
+
+def merge_executions(executions):
+    '''Group/merge executions by instrument, side, and broker.'''
+    merged_executions = {}
+    for execution in executions:
+        merging_factors = [str(execution["instrument_id"]), str(
+            execution["side"]), str(execution["broker_id"])]
+        merging_id = "-".join(merging_factors)
+        if merging_id in merged_executions:
+            merged_executions[merging_id]["quantity"] += execution["quantity"]
+        else:
+            merged_executions[merging_id] = execution.copy()
+    return merged_executions
+
+def merge_orders(orders):
+    '''Group/merge orders by instrument, side, and broker.'''
+    merged_orders = {}
+    for order in orders:
+        order = orders[order]
+        merging_factors = [str(order["instrument_id"]), str(order["side"]), str(order["broker_ids"][0])]
+        merging_id = "-".join(merging_factors)
+        if merging_id in merged_orders:
+            merged_orders[merging_id]["quantity"] = float(merged_orders[merging_id]["quantity"]) + float(order["quantity"])
+        else:
+            merged_orders[merging_id] = order.copy()
+    return merged_orders
+
+def find_merged_matching_inoa_order(execution, merged_inoa_orders):
+    '''Find merged_order with same broker, instrument_id, and side.'''
+    for order in merged_inoa_orders:
+        order = merged_inoa_orders[order]
+        same_instrument = order["instrument_id"] == execution["instrument_id"]
+        same_side = order["side"] == execution["side"]
+        same_broker_id = order["broker_ids"][0] == execution["broker_id"]
+        if same_instrument and same_side and same_broker_id:
+            return order
+    return None
+
+def find_matching_order_from_api_user(execution, orders):
+    '''Given a list of orders, find the first matching order from api user.'''
+    for order in orders:
+        order = orders[order]
+        same_instrument = order["instrument_id"] == execution["instrument_id"]
+        same_side = order["side"] == execution["side"]
+        same_broker_id = order["broker_ids"][0] == execution["broker_id"]
+        api_user = order["user_id"] == 1
+        if same_instrument and same_side and same_broker_id and api_user:
+            return order
+    return None
+
+def update_quantity(order, quantity):
+    '''Update order quantity.'''
+    new_order = {
+        "instrument_id": order["instrument_id"],
+        "side": order["side"],
+        "quantity": str(quantity),
+        "broker_id": order["broker_ids"][0],
+        "date": order["date"],
+        "order_id": order["order_id"],
+        "base_price": 0, "notes": ""}
+    Client.request("execution", "add_orders", { "orders": [new_order], "user_id": 1 })
