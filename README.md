@@ -6,7 +6,7 @@ Open a terminal, go to the root folder of this project, and run: `pip install -r
 
 ## Setup environment variables
 
-Create a `.env` file in the root of the project with the following content:
+Create a `dev.env` file in the root of the project with the following content:
 
 ```
 ALPHA_BASE_URL="http://prod.your_company_name.alphatools.com.br"
@@ -19,13 +19,16 @@ BBI_PASSWORD=your_bbi_password
 
 SMTP_TO="operations@your_company.com.br"
 SMTP_FROM="your_email@gmail.com"
+SMTP_SERVER="smtp.your_server.com"
 SMTP_PASS="y0ur_p4ssw0rd"
+
+BLACKLIST="LAME4"
 ```
 
 
 # Usage
 
-Inside the `app` folder, double-click the `run.py` file to import today's trades from SmartBBI into AlphaTools.
+Inside file explorer, go to the `SmartBbiToAlphaTools\app` folder, and double-click the `run.py` file to import today's trades from SmartBBI into AlphaTools.
 
 
 # Contributing
