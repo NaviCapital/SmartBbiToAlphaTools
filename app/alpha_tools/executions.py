@@ -29,6 +29,7 @@ def get_executions_from_xml(kind = "bov"):
         if count % 100 == 0: print("reading negocios...", count)
         count -= 1
         hash_negocio = fetch_negocio_from_xml(xml_negocio, kind)
+        if hash_negocio["instrument"] in os.getenv("BLACKLIST").split(","): continue
         execution_date = datetime.date.today()
         settlement_days = Instrument.get_settlement_days(hash_negocio["instrument"])
         settlement_date = Market.add_business_days(execution_date, settlement_days)
@@ -42,8 +43,7 @@ def get_executions_from_xml(kind = "bov"):
             "side": 1 if hash_negocio["side"] == "C" else 2,
 			"unit_value": float(hash_negocio["price"].replace(",", ".")),
 		}
-        if hash_negocio["instrument"] not in os.getenv("BLACKLIST").split(","):
-            executions.append(curr_negocio)
+        executions.append(curr_negocio)
     return executions
 
 def fetch_negocio_from_xml(xml_negocio, kind = "bov"):
