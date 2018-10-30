@@ -60,7 +60,7 @@ def fetch_negocio_from_xml(xml_negocio, kind = "bov"):
         hash_negocio["instrument"] = xml_negocio.cd_negocio.text
         hash_negocio["external_id"] = xml_negocio.nr_seqcomi.text
         hash_negocio["quantity"] = xml_negocio.qt_negocio.text
-        hash_negocio["broker"] = int(xml_negocio.cd_corret.text)
+        hash_negocio["broker"] = int(xml_negocio.cd_origem.text)
         hash_negocio["price"] = xml_negocio.pr_negocio.text
         hash_negocio["side"] = xml_negocio.cd_natope.text
     return hash_negocio
