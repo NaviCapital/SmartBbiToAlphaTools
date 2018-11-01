@@ -12,8 +12,8 @@ from bs4 import BeautifulSoup
 
 def get_all_executions_from_xml():
     executions = []
-    executions += get_executions_from_xml("bov")
     executions += get_executions_from_xml("bmf")
+    executions += get_executions_from_xml("bov")
     return executions
 
 def get_executions_from_xml(kind = "bov"):
@@ -33,16 +33,29 @@ def get_executions_from_xml(kind = "bov"):
         execution_date = datetime.date.today()
         settlement_days = Instrument.get_settlement_days(hash_negocio["instrument"])
         settlement_date = Market.add_business_days(execution_date, settlement_days)
-        curr_negocio = {
-            "broker_id": Broker.get_broker_id(hash_negocio["broker"]),
-			"exec_ref_id": execution_date.strftime("%Y%m%d-") + hash_negocio["external_id"],
-			"execution_date": execution_date.strftime("%Y-%m-%d"),
-            "instrument_id": Instrument.get_id(hash_negocio["instrument"]),
-			"quantity": int(hash_negocio["quantity"]),
-			"settlement_date": settlement_date.strftime("%Y-%m-%d"),
-            "side": 1 if hash_negocio["side"] == "C" else 2,
-			"unit_value": float(hash_negocio["price"].replace(",", ".")),
-		}
+        if kind == "bov":
+            curr_negocio = {
+                "broker_id": Broker.get_broker_id(hash_negocio["broker"]),
+                "exec_ref_id": execution_date.strftime("%Y%m%d-") + hash_negocio["external_id"],
+                "execution_date": execution_date.strftime("%Y-%m-%d"),
+                "instrument_id": Instrument.get_id(hash_negocio["instrument"]),
+                "quantity": int(hash_negocio["quantity"]),
+                "settlement_date": settlement_date.strftime("%Y-%m-%d"),
+                "side": 1 if hash_negocio["side"] == "C" else 2,
+                "unit_value": float(hash_negocio["price"].replace(",", "."))  
+            }
+        else:
+            curr_negocio = {
+                "broker_id": Broker.get_broker_id(hash_negocio["broker"]),
+                "exec_ref_id": execution_date.strftime("%Y%m%d-") + hash_negocio["external_id"],
+                "execution_date": execution_date.strftime("%Y-%m-%d"),
+                "instrument_id": Instrument.get_id(hash_negocio["instrument"]),
+                "quantity": int(hash_negocio["quantity"]),
+                "settlement_date": settlement_date.strftime("%Y-%m-%d"),
+                "side": 1 if hash_negocio["side"] == "C" else 2,
+                "unit_value": float(hash_negocio["price"].replace(",", ".")),
+                "rollover_base_price": float(hash_negocio["rollover_price"].replace(",", "."))
+            }
         executions.append(curr_negocio)
     return executions
 
@@ -63,6 +76,10 @@ def fetch_negocio_from_xml(xml_negocio, kind = "bov"):
         hash_negocio["broker"] = int(xml_negocio.cd_origem.text)
         hash_negocio["price"] = xml_negocio.pr_negocio.text
         hash_negocio["side"] = xml_negocio.cd_natope.text
+        hash_negocio["rollover_price"] = "0"
+        if not xml_negocio.vl_fut_curto.text == "0":
+            hash_negocio["rollover_price"] = xml_negocio.vl_fut_curto.text
+        
     return hash_negocio
 
 def add_executions(executions):
@@ -150,10 +167,18 @@ def delete_today_orders(date=datetime.date.today().strftime("%Y-%m-%d")):
     '''Delete every order based on specific date.'''
     orders = Client.request("execution", "get_order_info", { "start_date": date, "end_date": date })
     Client.request("execution", "delete_orders", { "order_ids": [int(order_id) for order_id in orders]})
+    print("Deleted today orders")
 
 def delete_orders(order_ids):
     '''Delete orders by id.'''
     Client.request("execution", "delete_orders", { "order_ids": order_ids })
+
+def delete_today_executions():
+    '''Delete today executions.'''
+    executions = get_all_executions_from_xml()
+    Client.request("execution", "delete_executions_by_exec_ref_id", {
+                   "exec_ref_ids": [execution["exec_ref_id"] for execution in executions]})
+    print("Deleted today executions")
 
 def delete_executions(executions):
     '''Delete specific executions.'''
