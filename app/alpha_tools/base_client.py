@@ -9,7 +9,7 @@ api_pass = os.getenv("ALPHA_PASSWORD")
 
 # Main method
 def request(module, method, params):
-    url = '%s/api/2/sync/%s/%s' % (base_url, module, method)
+    url = '%s/api/2/sync-readonly/%s/%s' % (base_url, module, method)
     auth = requests.auth.HTTPBasicAuth(api_user, api_pass)
     r = requests.post(url, json=params, auth=auth)
     if r.status_code == 200:
