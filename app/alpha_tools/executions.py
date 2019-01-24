@@ -64,6 +64,8 @@ def fetch_negocio_from_xml(xml_negocio, kind = "bov"):
     hash_negocio = {}
     if kind == "bov":
         hash_negocio["instrument"] = xml_negocio.ativo.text
+        if hash_negocio["instrument"][-1:] == "F":
+            hash_negocio["instrument"] = hash_negocio["instrument"][:-1]
         hash_negocio["external_id"] = xml_negocio.id_operacao.text
         hash_negocio["quantity"] = xml_negocio.qtd.text
         hash_negocio["broker"] = int(xml_negocio.origem.text)
@@ -253,7 +255,9 @@ def find_matching_order_from_api_user(execution, orders):
         same_side = order["side"] == execution["side"]
         same_broker_id = order["broker_ids"][0] == execution["broker_id"]
         api_user = order["user_id"] == 1
-        if same_instrument and same_side and same_broker_id and api_user:
+        not_allocated = order["allocation_rule_id"] == -1
+        # ou order["allocation_rule_name"] == "-"  ou order["allocation_status"] == 1  ???
+        if same_instrument and same_side and same_broker_id and api_user and not_allocated:
             return order
     return None
 
